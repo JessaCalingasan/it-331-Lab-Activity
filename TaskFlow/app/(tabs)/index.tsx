@@ -51,15 +51,24 @@ export default function HomeScreen() {
     setTasks(data || []);
   }
 
-  // ✅ CREATE
   async function addTask() {
     if (!task.trim()) return;
+  
     const { error } = await supabase
       .from('tasks')
-      .insert([{ title: task, completed: false }]);
-    if (error) { alert(error.message); return; }
-    
-    showPopup('Created successfully!', 'success'); // Trigger pop-up
+      .insert([
+        {
+          title: task,
+          completed: false,
+        },
+      ]);
+  
+    if (error) {
+      alert(error.message);
+      return;
+    }
+  
+    showPopup('Created successfully!', 'success');
     setTask('');
     loadTasks();
   }
